@@ -1,37 +1,28 @@
-import { StyleSheet, View, Button, TextInput, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
 import { useState } from 'react';
-import GoalItem from './components/GoalItem';
+import GoalItem from './components/ListItem';
+import GoalForm from './components/Form';
 
 export default function App() {
-  const [newGoal, setNewGoal] = useState("")
-  const [goals, setGoals] = useState([])
+  const [goals, setGoals] = useState([]);
 
-  function handleInput (text) {
-    setNewGoal(text)
-  }
-
-  function handleAddGoal () {
-   setGoals((currentGoals) => [...currentGoals, {id: Math.random().toString(), text: newGoal}])
+  function handleAddGoal(newGoal) {
+    setGoals((currentGoals) => [
+      ...currentGoals,
+      { id: Math.random().toString(), text: newGoal },
+    ]);
   }
 
   return (
     <View style={styles.appContainer}>
-      <View style={styles.formContainer}>
-        <TextInput 
-          style={styles.formContainer__input} 
-          placeholder='Your course goal...'
-          onChangeText={handleInput}/>
-        <Button 
-          style={styles.formContainer__button} 
-          title='Add goal'
-          onPress={handleAddGoal}/>
-      </View>
+      <GoalForm onAddGoal={handleAddGoal} />
       <View style={styles.listContainer}>
-        <FlatList 
+        <FlatList
           data={goals}
-          renderItem={(itemData) => <GoalItem text={itemData.item.text}/>}
-          keyExtractor = {(item)=> item.id}
-          alwaysBoundVertical={false}/>
+          renderItem={(itemData) => <GoalItem text={itemData.item.text} />}
+          keyExtractor={(item) => item.id}
+          alwaysBoundVertical={false}
+        />
       </View>
     </View>
   );
@@ -42,25 +33,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 60,
     paddingHorizontal: 10,
-    backgroundColor: '#ffffff', 
-  },
-  formContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginBottom: 20,   
-  },
-  formContainer__input: {
-    width: '70%',
-    padding: 10,
-    borderWidth: 2,
-    borderColor: '#cccccc',
-  }, 
-  formContainer__button: {
-    borderRadius: 6,
-    borderWidth: 2,
-    borderColor: "blue"
+    backgroundColor: '#ffffff',
   },
   listContainer: {
     flex: 5,
