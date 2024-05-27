@@ -12,5 +12,13 @@ function GoalItem (props) {
 export default GoalItem;
 
 const styles = StyleSheet.create({
-
+  listContainer__item: {
+    marginVertical: 5,
+    padding: 10,
+    backgroundColor: 'purple',
+    borderRadius: 6
+  },
+  listContainer__text: {
+    color: '#ffffff'
+  }
 })
